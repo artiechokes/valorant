@@ -115,22 +115,28 @@ function getNextAgent() {
 
   selectedAgent = selectAgent.value;
   agentIndex = agentList.indexOf(selectedAgent);
-
+  // get agent's role
   for (let i = 0; i < agentProp[0].length; i++) {
     if (agentProp[0][i] === "role") {
       document.querySelector(
         ".agent-display." + divId + " " + agentProp[1][i]
       ).innerText = agentDataSorted[agentIndex][agentProp[0][i]].displayName;
     } else if (agentProp[0][i] === "abilities") {
-      for (let j = 0; j < 4; i++) {
-        document.querySelector(
-          ".agent-display." + divId + " " + agentPropAbilities[1][j] + "-" + j
-        ).innerText =
-          agentDataSorted[agentIndex][agentProp[0][i]][j][
-            agentPropAbilities[0][j]
-          ];
+      //agent abilities
+      let abilityNum;
+      for (let j = 0; j < 3; j++) {
+        abilityNum = j + 1;
+        for (let k = 0; k < 3; k++) {
+          document.querySelector(
+            ".agent-display." + divId + " " + agentPropAbilities[1][k] + "-" + j
+          ).innerText =
+            agentDataSorted[agentIndex][agentProp[0][i]][j][
+              agentPropAbilities[0][k]
+            ];
+        }
       }
     } else {
+      // agent bio
       document.querySelector(
         ".agent-display." + divId + " " + agentProp[1][i]
       ).innerText = agentDataSorted[agentIndex][agentProp[0][i]];
