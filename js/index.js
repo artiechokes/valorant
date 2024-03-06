@@ -68,10 +68,10 @@ function sortAgents() {
 const select = document.getElementById("agent-select");
 function agentDropdown() {
   for (let i = 0; i < agentList.length; i++) {
-    let optn = agentList[i];
+    let option = agentList[i];
     let el = document.createElement("option");
-    el.textContent = optn;
-    el.value = optn;
+    el.textContent = option;
+    el.value = option;
     select.appendChild(el);
   }
   select.removeChild(select.firstElementChild);
@@ -95,11 +95,11 @@ let agentIndex,
   abilityThree,
   ultimate,
   ultimateName;
-selectAgent.onchange = currentAgentInfo;
+selectAgent.onchange = getNextAgent;
 
 const agentProp = [
   ["displayName", "description", "fullPortrait", "role", "abilities"],
-  [".agent-name", ".agent-description", ".agent-img", "agent-role"],
+  ["agent-name", "agent-description", "agent-img", "agent-role"],
 ];
 const agentPropAbilities = [
   ["displayName", "description", "displayIcon"],
@@ -117,28 +117,46 @@ function getNextAgent() {
   agentIndex = agentList.indexOf(selectedAgent);
   // get agent's role
   for (let i = 0; i < agentProp[0].length; i++) {
+    if (agentProp[0][i] === "fullPortrait") {
+      document.querySelector(
+        `.agent-display.${divId} img.${agentProp[1][i]}`
+      ).src = agentDataSorted[agentIndex][agentProp[0][i]];
+    }
     if (agentProp[0][i] === "role") {
       document.querySelector(
-        ".agent-display." + divId + " " + agentProp[1][i]
+        `.agent-display.${divId} .${agentProp[1][i]}`
       ).innerText = agentDataSorted[agentIndex][agentProp[0][i]].displayName;
     } else if (agentProp[0][i] === "abilities") {
       //agent abilities
       let abilityNum;
-      for (let j = 0; j < 3; j++) {
+      for (let j = 0; j < 4; j++) {
         abilityNum = j + 1;
         for (let k = 0; k < 3; k++) {
-          document.querySelector(
-            ".agent-display." + divId + " " + agentPropAbilities[1][k] + "-" + j
-          ).innerText =
-            agentDataSorted[agentIndex][agentProp[0][i]][j][
-              agentPropAbilities[0][k]
-            ];
+          if (agentPropAbilities[0][k] === "displayIcon") {
+            document.querySelector(
+              `.agent-display.${divId} .ability-${j + 1} .${
+                agentPropAbilities[1][k]
+              }`
+            ).src =
+              agentDataSorted[agentIndex][agentProp[0][i]][j][
+                agentPropAbilities[0][k]
+              ];
+          } else {
+            document.querySelector(
+              `.agent-display.${divId} .ability-${j + 1} .${
+                agentPropAbilities[1][k]
+              }`
+            ).innerText =
+              agentDataSorted[agentIndex][agentProp[0][i]][j][
+                agentPropAbilities[0][k]
+              ];
+          }
         }
       }
     } else {
       // agent bio
       document.querySelector(
-        ".agent-display." + divId + " " + agentProp[1][i]
+        ".agent-display." + divId + " ." + agentProp[1][i]
       ).innerText = agentDataSorted[agentIndex][agentProp[0][i]];
     }
   }

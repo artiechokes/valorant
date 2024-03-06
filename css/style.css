@@ -15,9 +15,38 @@ label {
 }
 
 #agent-ability-one-img {
-  background-color: #0a5464;
+  background-color: #425e62;
   padding: 10px;
   border-radius: 10px;
   max-width: 128px;
   max-height: 128px;
+}
+
+body {
+  color: white;
+  background-color: #1c2939;
+  font-family: "Nunito", sans-serif;
+}
+
+.nunito-500 {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.agent-img {
+  width: 500px;
+}
+
+.agent-slider {
+  width: 100%;
+  position: relative;
+}
+.agent-slider .agent-display {
+  position: absolute;
+  border: 1px solid red;
+}
+.agent-slider .slide-b {
+  left: 50vw;
 }/*# sourceMappingURL=style.css.map */
