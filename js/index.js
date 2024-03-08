@@ -1,16 +1,14 @@
-/*function handleSubmit(event) {
-  event.preventDefault();
+// Helper function
+let domReady = (cb) => {
+  document.readyState === "interactive" || document.readyState === "complete"
+    ? cb()
+    : document.addEventListener("DOMContentLoaded", cb);
+};
 
-  const data = new FormData(event.target);
-
-  const value = Object.fromEntries(data.entries());
-
-  console.log({ value });
-}
-
-const form = document.querySelector("form");
-form.addEventListener("submit", handleSubmit);
-*/
+domReady(() => {
+  // Display body when DOM is loaded
+  document.body.style.visibility = "visible";
+});
 
 const apiUrl = "https://valorant-api.com/v1/agents/";
 let valData;
@@ -57,7 +55,7 @@ function sortAgents() {
   console.log(valData);
 
   agentDataSorted = valData.reduce((accumulator, current) => {
-    if (!accumulator.find((item) => item.displayName === current.displayName)) {
+    if (current.isPlayableCharacter === true) {
       accumulator.push(current);
     }
     return accumulator;
@@ -76,26 +74,14 @@ function agentDropdown() {
   }
   select.removeChild(select.firstElementChild);
 
-  currentAgentInfo();
+  startingAgent();
 }
 
 // Show Agent Info
 let selectAgent = document.querySelector("#agent-select");
 let selectedAgent = document.querySelector("#agent-select");
-let agentIndex,
-  agentName,
-  agentRole,
-  agentBio,
-  abilityOneName,
-  abilityOne,
-  abilityOneImg,
-  abilityTwoName,
-  abilityTwo,
-  abilityThreeName,
-  abilityThree,
-  ultimate,
-  ultimateName;
-selectAgent.onchange = getNextAgent;
+let agentIndex;
+selectAgent.onchange = startingAgent;
 
 const agentProp = [
   ["displayName", "description", "fullPortrait", "role", "abilities"],
@@ -105,26 +91,42 @@ const agentPropAbilities = [
   ["displayName", "description", "displayIcon"],
   ["ability-name", "ability-description", "ability-img"],
 ];
-let divId;
-function getNextAgent() {
-  if (divId === "slide-a") {
-    divId = "slide-b";
+let activeSlide;
+let count = 0;
+function startingAgent() {
+  if (localStorage.getItem("selectedAgent") && count === 0) {
+    selectedAgent = localStorage.getItem("selectedAgent");
+    agentIndex = agentList.indexOf(selectedAgent);
+    document
+      .querySelectorAll(`.agent-dropdown option`) //searching by value gives error
+      [agentIndex].setAttribute("selected", "selected");
+    activeSlide = "slide-a";
+    count++;
   } else {
-    divId = "slide-a";
+    selectedAgent = selectAgent.value;
+    localStorage.setItem("selectedAgent", selectedAgent);
+    agentIndex = agentList.indexOf(selectedAgent);
+    if (activeSlide === "slide-a") {
+      activeSlide = "slide-b";
+    } else {
+      activeSlide = "slide-a";
+    }
   }
 
-  selectedAgent = selectAgent.value;
-  agentIndex = agentList.indexOf(selectedAgent);
-  // get agent's role
+  displayAgentInfo();
+  // document.querySelector("#agent-name").innerText = agentDataSorted;
+}
+
+function displayAgentInfo() {
   for (let i = 0; i < agentProp[0].length; i++) {
     if (agentProp[0][i] === "fullPortrait") {
       document.querySelector(
-        `.agent-display.${divId} img.${agentProp[1][i]}`
+        `.agent-display.${activeSlide} img.${agentProp[1][i]}`
       ).src = agentDataSorted[agentIndex][agentProp[0][i]];
     }
     if (agentProp[0][i] === "role") {
       document.querySelector(
-        `.agent-display.${divId} .${agentProp[1][i]}`
+        `.agent-display.${activeSlide} .${agentProp[1][i]}`
       ).innerText = agentDataSorted[agentIndex][agentProp[0][i]].displayName;
     } else if (agentProp[0][i] === "abilities") {
       //agent abilities
@@ -134,7 +136,7 @@ function getNextAgent() {
         for (let k = 0; k < 3; k++) {
           if (agentPropAbilities[0][k] === "displayIcon") {
             document.querySelector(
-              `.agent-display.${divId} .ability-${j + 1} .${
+              `.agent-display.${activeSlide} .ability-${j + 1} .${
                 agentPropAbilities[1][k]
               }`
             ).src =
@@ -143,7 +145,7 @@ function getNextAgent() {
               ];
           } else {
             document.querySelector(
-              `.agent-display.${divId} .ability-${j + 1} .${
+              `.agent-display.${activeSlide} .ability-${j + 1} .${
                 agentPropAbilities[1][k]
               }`
             ).innerText =
@@ -156,62 +158,12 @@ function getNextAgent() {
     } else {
       // agent bio
       document.querySelector(
-        ".agent-display." + divId + " ." + agentProp[1][i]
+        ".agent-display." + activeSlide + " ." + agentProp[1][i]
       ).innerText = agentDataSorted[agentIndex][agentProp[0][i]];
     }
   }
-  //agentDataSorted[1][agentProp[4]][2][agentPropAbilities[3]]
 }
-let count = 0;
-function currentAgentInfo() {
-  if (localStorage.getItem("selectedAgent") && count === 0) {
-    selectedAgent = localStorage.getItem("selectedAgent");
-    count++;
-  } else {
-    selectedAgent = selectAgent.value;
-    localStorage.setItem("selectedAgent", selectedAgent);
-  }
-  agentIndex = agentList.indexOf(selectedAgent);
-  agentName = agentDataSorted[agentIndex].displayName;
-  agentBio = agentDataSorted[agentIndex].description;
-  abilityOneName = agentDataSorted[agentIndex].abilities[0].displayName;
-  abilityOne = agentDataSorted[agentIndex].abilities[0].description;
-  abilityOneImg = agentDataSorted[agentIndex].abilities[0].displayIcon;
-
-  document.getElementById("agent-name").innerText = agentName;
-  document.getElementById("agent-bio").innerText = agentBio;
-  document.getElementById("agent-ability-one").innerText = abilityOneName;
-  document.getElementById("agent-ability-one-info").innerText = abilityOne;
-  document.getElementById("agent-ability-one-img").src = abilityOneImg;
-
-  // document.querySelector("#agent-name").innerText = agentDataSorted;
-}
-
-// Sample I need to incorporate into my own project
-var Data = [
-  {
-    id_list: 1,
-    name: "Nick",
-    token: "312312",
-  },
-  {
-    id_list: 2,
-    name: "John",
-    token: "123123",
-  },
-
-  {
-    id_list: 2,
-    name: "Jake",
-    token: "123123",
-  },
-  {
-    id_list: 2,
-    name: "Alan",
-    token: "123123",
-  },
-];
-var index = Data.map(function (e) {
-  return e.name;
-}).indexOf("Jake");
-console.log(index);
+document.querySelector(".sliding").addEventListener("click", () => {
+  document.querySelector(".agent-display").classList.add("transition");
+  document.querySelector(".agent-display").classList.add("lefty");
+});
