@@ -18,3 +18,10 @@
 - Added HTML with planned elements for the slide. Also linked to bootstrap, and google fonts.
 - Added temporary css for the sake of visibility.
 - Drop down now works with sliders.
+
+## Day four (3/8)
+
+- Drop now now defaults to last selected agent. The slide now has some uniformity.
+- Removed irrelevant and unnecessary code.
+- Reorganized the HTML structure of the code by adding row & column divs.
+- learned how `array.reduce` functions.
