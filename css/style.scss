@@ -5,25 +5,39 @@ textarea {
 label {
   display: block;
 }
-.big-space {
-  margin: 1em 1em;
-  width: 50px;
-  height: 400px;
-  border-left: 1px solid red;
-}
 
-#agent-ability-one-img {
+.ability-img {
   background-color: #425e62;
   padding: 10px;
   border-radius: 10px;
-  max-width: 128px;
-  max-height: 128px;
+  width: 100px;
+  height: 100px;
 }
 
 body {
   color: white;
   background-color: #1c2939;
   font-family: "Nunito", sans-serif;
+}
+.agent-img-wrapper {
+  //overflow: hidden;
+  margin: 0 auto;
+  height: 800px;
+  border: 1px solid red;
+  z-index: -1;
+}
+.agent-img {
+  position: relative;
+  object-fit: cover;
+  height: 100%;
+  object-position: center;
+  //transform: translateX(-20%);
+  right: 50%;
+}
+
+.agent-name {
+  font-size: 96px;
+  text-transform: uppercase;
 }
 
 .nunito-500 {
@@ -33,20 +47,10 @@ body {
   font-style: normal;
 }
 
-.agent-img {
-  width: 500px;
+.agent-info {
+  padding-left: 60px;
 }
-
-.agent-slider {
-  width: 100%;
-  position: relative;
-
-  .agent-display {
-    position: absolute;
-    border: 1px solid red;
-  }
-
-  .slide-b {
-    left: 50vw;
-  }
+.agent-description {
+  margin-top: 14px;
+  text-align: justify;
 }
