@@ -167,3 +167,13 @@ document.querySelector(".sliding").addEventListener("click", () => {
   document.querySelector(".agent-display").classList.add("transition");
   document.querySelector(".agent-display").classList.add("lefty");
 });
+
+document.querySelector(".slide-btn").addEventListener("click", () => {
+  document.querySelector(".slide-a").classList.add("grow");
+  setTimeout(() => {
+    document.querySelector(".slide-a").classList.add("exit-left");
+    setTimeout(() => {
+      document.querySelector(".slide-b").classList.add("enter-right");
+    }, 10);
+  }, 500);
+});

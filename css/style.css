@@ -57,4 +57,62 @@ body {
 .agent-description {
   margin-top: 14px;
   text-align: justify;
+}
+
+.agent-display {
+  border: 1px solid lightblue;
+}
+
+.slide-btn {
+  background: #fff;
+}
+.slide-btn:hover {
+  background: gray;
+}
+
+.slide-out {
+  animation-name: slide-out;
+  animation-duration: 5s;
+}
+
+.dropdown-content,
+.slide-btn {
+  display: inline-block;
+}
+
+.slide-b {
+  transform: scale(1) translateX(100vw) translateY(-75vh);
+}
+
+@keyframes slide-out {
+  0% {
+    transform: translateX(0px) scale(1);
+  }
+  20% {
+    transform: translateX(0px) scale(1.2);
+  }
+  75% {
+    transform: translateX(-100vw) scale(1.2);
+  }
+  100% {
+    transform: translateX(-100vw) scale(1.2);
+  }
+}
+.invisible {
+  display: none;
+}
+
+.grow {
+  transition: 0.5s transform ease-in;
+  transform: scale(1.2);
+}
+
+.exit-left {
+  transition: 1s transform ease-in-out;
+  transform: scale(1.2) translateX(-100vw);
+}
+
+.enter-right {
+  transition: 1s transform ease-in-out;
+  transform: scale(1) translateX(0vw) translateY(-75vh);
 }/*# sourceMappingURL=style.css.map */
