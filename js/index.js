@@ -169,11 +169,23 @@ document.querySelector(".sliding").addEventListener("click", () => {
 });
 
 document.querySelector(".slide-btn").addEventListener("click", () => {
-  document.querySelector(".slide-a").classList.add("grow");
+  document.querySelector(".slide-a").classList.add("animate__backOutLeft");
   setTimeout(() => {
-    document.querySelector(".slide-a").classList.add("exit-left");
-    setTimeout(() => {
-      document.querySelector(".slide-b").classList.add("enter-right");
-    }, 10);
-  }, 500);
+    document.querySelector(".slide-a").classList.add("hidden");
+    document.querySelector(".slide-b").classList.remove("hidden");
+    document.querySelector(".slide-b").classList.add("animate__backInRight");
+  }, 400);
+
+  setTimeout(() => {
+    document.querySelector(".slide-a").classList.remove("animate__backOutLeft");
+    document.querySelector(".slide-b").classList.remove("animate__backInRight");
+  }, 2000);
+  // setTimeout(() => {
+  //   document.querySelector(".slide-a").classList.add("exit-left");
+  //   setTimeout(() => {
+  //     document.querySelector(".slide-b").classList.add("enter-right");
+  //   }, 10);
+  // }, 500);
 });
+
+

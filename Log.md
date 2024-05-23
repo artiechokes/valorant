@@ -19,9 +19,19 @@
 - Added temporary css for the sake of visibility.
 - Drop down now works with sliders.
 
-## Day four (3/8)
+## Day Four (3/8)
 
 - Drop now now defaults to last selected agent. The slide now has some uniformity.
 - Removed irrelevant and unnecessary code.
 - Reorganized the HTML structure of the code by adding row & column divs.
 - learned how `array.reduce` functions.
+
+## Day Five (3/10)
+
+-Tested css transitions vs css animation
+-used Timeout to break animation
+
+## Day Six (3/11)
+
+-No me digas
+ - https://www.youtube.com/watch?v=4UXJb4rjeDg
